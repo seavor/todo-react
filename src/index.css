@@ -47,6 +47,28 @@ table {
 	border-spacing: 0;
 }
 
+
+/* Start of Application Styles*/
+
+/* App-wide resets */
+* {
+	box-sizing: border-box;
+}
+
+a,
+button,
+input[type=button] {
+	cursor: pointer;
+	background: none;
+	font-size: inherit;
+	color: inherit;
+	font-weight: inherit;
+	padding: 0;
+	margin: 0;
+	border: 0;
+	outline: none;
+}
+
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Share+Tech+Mono');
 
 /*
@@ -58,9 +80,7 @@ table {
  * 1) Allow use of 100% screen height
  */
 
-* {
-	box-sizing: border-box;
-}
+/* Helper Classes */
 
 .clearfix {
 	content: "";
@@ -71,6 +91,61 @@ table {
 .height-fix {
 	min-height: 100%;
 }
+
+a.button,
+button.button,
+input.button {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+}
+
+	a.button:empty,
+	button.button:empty,
+	input.button:empty {
+		background-color: #555555;
+	}
+	
+	a.button svg g,
+	button.button svg g,
+	input.button svg g {
+		transition: fill .25s;
+	}
+	
+		a.button:hover svg g,
+		a.button:focus svg g,
+		button.button:hover svg g,
+		button.button:focus svg g,
+		input.button:hover svg g
+		input.button:focus svg g {
+			fill: rgb(0, 0, 255);
+		}
+		
+		a.button:active svg g,
+		button.button:active svg g,
+		input.button:active svg g {
+			fill: rgba(0, 0, 255, .75);
+		}
+
+		a.button.selected svg g,
+		button.button.selected svg g,
+		input.button.selected svg g {
+			fill: rgba(0, 255, 0, .75);;
+		}
+
+		a.button.error svg g,
+		button.button.error svg g,
+		input.button.error svg g {
+			fill: rgba(255, 0, 0, .75);;
+		}
+
+.single-line-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Main Body Styling */
 
 html,
 body,
@@ -87,16 +162,4 @@ body {
 
 body.no-scroll {
 	overflow: hidden;
-}
-
-a,
-button {
-	cursor: pointer;
-	border: 0;
-	background: none;
-}
-
-a:focus,
-button:focus {
-	outline: none;
 }

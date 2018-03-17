@@ -11,6 +11,10 @@ This project was designed and built over the weekend as a showcase of my standin
 ### Learning Sources
 - [React.js Essential Training](https://www.lynda.com/React-js-tutorials/React-js-Essential-Training/496905-2.html)
 - [React JS Crash Course](https://www.youtube.com/watch?v=A71aqufiNtQ)
+- [React components and class properties](https://michalzalecki.com/react-components-and-class-properties/)
+- [Writing clean code with memoized event handlers](https://michalzalecki.com/react-memoized-event-handlers/)
+- [Don't Use Bind When Passing Props](https://daveceddia.com/avoid-bind-when-passing-props/)
+- [Pete Hunt: React: Rethinking best practices -- JSConf EU 2013](https://www.youtube.com/watch?v=x7cQ3mrcKaY&feature=youtu.be)
 
 ## Running the Application
 - `cd {project-parent-directory}`

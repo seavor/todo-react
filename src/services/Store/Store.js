@@ -1,3 +1,6 @@
+import uuid from 'uuid';
+import Moment from 'moment-timezone';
+
 var fall_back_memory_store = {};
 
 class Store {
@@ -11,6 +14,14 @@ class Store {
 	
     set(key, value) {
 	    this.store[key] = JSON.stringify(value || null);
+	}
+
+	newDataEntry(tomorrow) {
+	    return {
+			id: uuid.v4(),
+			date: Moment().add(tomorrow || 0, 'days').toISOString(),
+			tz: Moment.tz.guess()
+	    }
 	}
 }
 

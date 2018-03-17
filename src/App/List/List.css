@@ -1,7 +1,6 @@
 .List {
 	position: relative;
 	width: 100%;
-	background: blue;
 }
 
 	.List-noData {
@@ -10,6 +9,6 @@
 	    opacity: .25;
 	    position: absolute;
 	    left: 50%;
-	    top: 25%;
+	    top: 0;
 	    transform: translate(-50%, 0)
 	}

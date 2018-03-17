@@ -11,10 +11,21 @@
 
 	.ListArray-item {
 	    width: 33%;
-	    border: 1px solid;
 	    flex-grow: 1;/* 1 */
 	    flex-shrink: 0;/* 2 */
+	    padding: 20px 0;
 	}
+
+	.ListArray-item:nth-child(2) {
+	    box-shadow: 0 0 10px 0;
+	}
+
+		.ListArray-item_title {
+			text-align: center;
+    		font-size: 50px;
+    		opacity: .25;
+    		margin-bottom: 20px;
+		}
 
 @media screen and (max-width: 991px) {
     .ListArray {

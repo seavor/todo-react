@@ -6,19 +6,21 @@ import Moment from 'moment-timezone';
 import './Clock.css';
 
 class Clock extends Component {
-	constructor() {
-		super();
+	state = {
+		date: this._newDate(),
+		time: this._newTime()
+	}
 
-		this.state = {
-			date: this.newDate(),
-			time: this.newTime()
-		};
+	constructor(props) {
+		super(props);
+
+		this.tick = this.tick.bind(this);
 	}
 
 	/* Lifecycle Methods
 	*********************************************************************/
 	componentDidMount() {
-		this.ticker = setInterval(this.tick.bind(this), 1000);
+		this.ticker = setInterval(this.tick, 1000);
 	}
 
 	componentWillMount() {
@@ -44,12 +46,14 @@ class Clock extends Component {
 	*********************************************************************/
 	tick() {
 		this.setState({
-    		date: this.newDate(),
-    		time: this.newTime()
+    		date: this._newDate(),
+    		time: this._newTime()
     	});
   	}
 
-  	newDate() {
+  	/* Private Methods
+	*********************************************************************/
+	_newDate() {
   		let date = Moment().format('dddd DD MM YYYY').split(' ');
 
   		return {
@@ -60,7 +64,7 @@ class Clock extends Component {
 		};
   	}
 
-  	newTime() {
+  	_newTime() {
   		return Moment().format('hh:mma');
   	}
 }

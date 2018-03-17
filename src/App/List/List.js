@@ -7,23 +7,24 @@ import './List.css';
 import ListItem from './ListItem/ListItem';
 
 class List extends Component {
-    constructor() {
-        super();
-
-    }
+    /* Prop Methods
+    *********************************************************************/
+    updateList = () => this.props.updateList.bind(this);
 
     /* Lifecycle Methods
     *********************************************************************/
+    constructor() {
+        super();
+
+        this.mapItems = this.mapItems.bind(this);
+    }
+
     render() {
         return (
             <div className="List height-fix">
-                <button onClick={this.props.newItem.bind(this)}>New Item</button>
-
-                {!(this.props.list && this.props.list.items.length) ? this.noListDisplay() :
+                {!this.props.list ? this.noListDisplay() :
                     <ul className="List-items">
-                        {this.props.list.items.map(function(item, i){
-                            return <ListItem item={item} key={i}></ListItem>;
-                        })}
+                        {this.props.list.items.map(this.mapItems)}
                     </ul>
                 }
             </div>
@@ -32,6 +33,10 @@ class List extends Component {
 
     /* Component Methods
     *********************************************************************/
+    mapItems(item, i) {
+        return <ListItem item={item} key={i} updateItem={this.updateList()}></ListItem>;
+    }
+
     noListDisplay() {
         return (
             <div className="List-noData">No list data</div>
@@ -41,7 +46,7 @@ class List extends Component {
 
 List.propTypes = {
     list: PropTypes.object,
-    newItem: PropTypes.func
+    updateList: PropTypes.func
 }
 
 export default List;

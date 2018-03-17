@@ -3,17 +3,41 @@
   min-height: 100%;
   display: flex;
   flex-direction: column;
-}
-
-    .App-clock {
-        padding: 10px 20px;
-        margin-bottom: 30px;
+}   
+    .App-header {
+        position: relative;
     }
+
+        .App-buttons {
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding: 20px;
+        }
+
+            .App-buttons button {
+                margin-left: 20px;
+                width: 50px;
+                height: 50px;
+            }
+
+            .App-buttons_new {
+                
+            }
+
+            .App-buttons_settings {
+                
+            }
+
+        .App-clock {
+            padding: 10px 20px;
+            margin-bottom: 30px;
+        }
 
     .App-lists {
         height: 100%;
         display: flex;
-        overflow-x: hidden;
+        overflow: hidden;
         flex-grow: 1;
     }
 

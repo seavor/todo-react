@@ -2,19 +2,32 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+// Component Service Dependencies
+import Images from '../../services/Images/Images';
+
 // Component File Dependencies
 import './Modal.css';
 
 class Modal extends Component {
+    /* Prop Methods
+    *********************************************************************/
+    closeModal = () => this.props.closeModal.bind(this);
+    
     /* Lifecycle Methods
     *********************************************************************/
+    constructor(props) {
+        super(props);
+
+        this.prevent = this.prevent.bind(this);
+    }
+
     render() {
         this.toggleBodyControls();
 
         return (
-            <div className={"Modal " + (this.props.isOpen ? 'active' : '')} onClick={this.props.closeModal.bind(this)}>
-                <div className="Modal-wrapper" onClick={this.prevent.bind(this)}>
-                    <button className="Modal-wrapper_close" onClick={this.props.closeModal.bind(this)} />
+            <div className={"Modal " + (this.props.isOpen ? 'active' : '')} onClick={this.closeModal()}>
+                <div className="Modal-wrapper" onClick={this.prevent}>
+                    <button className="Modal-wrapper_close button" onClick={this.closeModal()}>{Images.closeIcon()}</button>
                     <div className="Modal-wrapper_content">
                         {this.props.children}
                     </div>

@@ -1,0 +1,39 @@
+.ListItem {
+	font-size: 10px;
+}
+	.ListItem-wrapper {
+		width: 100%;
+		text-align: left;
+		padding: 10px 20px;
+		transition: background .25s;
+	}
+
+		.ListItem-wrapper:hover,
+		.ListItem-wrapper:focus {
+			background: rgba(0, 0, 0, .1);
+		}
+
+		.ListItem-wrapper:active {
+			box-shadow: inset 0px 0px 4px 1px rgba(0, 0, 0, .25);
+		}
+
+	.ListItem-text {
+	    float: left;
+	    width: 100%;
+		padding: 1em 5.35em 1em 0;
+		font-size: 1.5em;
+	}
+
+	.ListItem-actions {
+		float: left;
+	    width: 8em;
+	    height: 100%;
+	    margin-left: -8em;
+	}
+
+		.ListItem-actions button {
+			width: 3em;
+			height: 3em;
+			margin-left: 1em;
+			margin-top: .75em;
+		}
