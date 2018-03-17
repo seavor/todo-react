@@ -1,0 +1,70 @@
+/*
+ * 1) Base font size, all children should use EM
+ * 2) center against .Clock-date_day
+ * 3) equalize length with .Clock-date_date
+ */
+
+
+
+/* Component Wrapper */
+.Clock {
+	margin: 0 auto;
+	padding: 10px 20px;
+	color: #555555;
+	font-size: 30px; /* 1 */
+}
+
+	/* Date Wrapper */
+	.Clock-date {
+
+	}
+
+		.Clock-date_day,
+		.Clock-date_wrapper {
+			float: left;
+		}
+
+		.Clock-date_day {
+			text-transform: uppercase;
+			font-size: 2.5em;
+		    font-weight: 700;
+		    line-height: 1;
+		    margin-right: .1em;
+		}
+
+		.Clock-date_wrapper {
+		
+		}
+
+		.Clock-date_date,
+		.Clock-date_year {
+			font-weight: 300;
+			font-family: 'Share Tech Mono', monospace;
+		}
+
+		.Clock-date_date {
+			line-height: 1.4; /* 2 */
+		}
+
+		.Clock-date_year {
+			font-size: 1.25em; /* 3 */
+			line-height: .5; /* 2 */
+		}
+
+	/* Time Wrapper */
+	.Clock-time {
+		display: block;
+		clear: both;
+	}
+
+@media screen and (max-width: 991px) {
+	.Clock {
+		font-size: 25px;
+	}
+}
+
+@media screen and (max-width: 640px) {
+	.Clock {
+		font-size: 20px;
+	}
+}

@@ -1,0 +1,54 @@
+.Modal {
+	position: absolute;
+    top: -100%;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, .75);
+    z-index: 1;
+	transition: top .25s;
+	overflow: hidden;
+}
+
+	.Modal-wrapper {
+		width: 90%;
+		margin: 0 auto;
+		max-width: 400px;
+		max-height: 90%;
+		min-height: 500px;
+		overflow: scroll;
+		background: white;
+		border-radius: 20px;
+
+		position: absolute;
+		top: 100%;
+		left: 50%;
+		transform: translate(-50%, 0);
+		transition: top .5s;
+		transition-delay: .25s;
+
+	}
+
+		.Modal-wrapper_close {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			width: 30px;
+			height: 30px;
+			border-radius: 50%;
+			background-color: #555555;
+		}
+
+		.Modal-wrapper_content {
+			width: 100%;
+			padding: 50px 20px 20px;
+			background: blue;
+		}
+
+	.Modal.active {
+		top: 0;
+	}
+
+	.Modal.active .Modal-wrapper {
+		top: 25%;
+	}

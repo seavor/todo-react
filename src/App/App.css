@@ -1,0 +1,30 @@
+.App {
+  position: relative;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+    .App-clock {
+        padding: 10px 20px;
+        margin-bottom: 30px;
+    }
+
+    .App-lists {
+        height: 100%;
+        display: flex;
+        overflow-x: hidden;
+        flex-grow: 1;
+    }
+
+    .App-credits {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: .25;
+        font-size: 12px;
+    }
+
+        .App-credits a {
+            color: inherit;
+        }
