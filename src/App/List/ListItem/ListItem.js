@@ -64,7 +64,7 @@ class ListItem extends Component {
 	            	</div>
 	            </button>
 
-	             <EditItemModal isOpen={this.state.modalIsOpen} closeModal={this.toggleModal} item={this.props.item} save={this.updateSelf}></EditItemModal>
+	           <EditItemModal isOpen={this.state.modalIsOpen} closeModal={this.toggleModal} item={this.props.item} save={this.updateSelf}></EditItemModal>
             </li>
         );
     }
@@ -80,6 +80,18 @@ class ListItem extends Component {
     togglePersist(e) {
     	e.stopPropagation();
 
+        /* @NOTE
+
+            The more I understand React, the more I'm wondering if this isn't an anti-pattern
+            of sorts. I'm still altering this.props directly, just not DIRECTLY directly, which
+            may be the reason it avoids the warning you get when trying to alter this.props.
+
+            The reason for this pattern was i found i didnt have to pass the mutated object up the
+            chain to be acted upon by the controlling parent. this.prop is passed by the controlling
+            parent, so mutating it locally and then telling the parent to just update using the same
+            object saved me the overhead of instantiating, passing and accepting new objects.
+
+        */
     	let item = this.props.item;
     	item.persist = !item.persist;
 

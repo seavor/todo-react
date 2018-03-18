@@ -31,16 +31,14 @@ class NewItemModal extends Component {
 
             I didnt expect to have to copy a static object reference
             to avoid mutating the original static object properties
-            when working on the assignment variable.
+            when working on the assignment variable. I expected assigning
+            static properties to a variable would be done by copy, and not
+            by reference.
 
             Love this spread operator tho.
         */
         modalForm: {...NewItemModal.DEFAULT_FORM_STATE}
     };
-
-    /* Prop Methods
-    *********************************************************************/
-    closeModal = () => this.props.closeModal.bind(this);
 
     /* Lifecycle Methods
     *********************************************************************/
@@ -54,11 +52,25 @@ class NewItemModal extends Component {
         this.onListChange = this.onListChange.bind(this);
     }
 
+    componentWillMount() {
+        this.closeModal = this.props.closeModal.bind(this);
+
+        if (this.props.item) {
+            this.setState({
+                modalForm: {
+                    text: this.props.item.text || NewItemModal.DEFAULT_FORM_STATE.text,
+                    // @TODO actually get this.props.item.list
+                    list: this._getItemListIndex(this.props.item, this.props.lists) || NewItemModal.DEFAULT_FORM_STATE.list
+                }
+            })
+        }
+    }
+
     render() {
         return (
-            <Modal isOpen={this.props.isOpen} closeModal={this.closeModal()}>
+            <Modal isOpen={this.props.isOpen} closeModal={this.closeModal}>
                 <div className="NewItemModal">
-                    <h6>New Item</h6>
+                    <h6>{this.props.item ? 'Edit' : 'New'} Item</h6>
                     <form onSubmit={this.handleNewListItem}>
                         <div className="NewItemModal-text">
                             <input type="text" placeholder="Watchya doing?" value={this.state.modalForm.text} ref="text" maxLength="100" onChange={this.onTextChange}></input>
@@ -122,11 +134,26 @@ class NewItemModal extends Component {
         if (invalid) {
             this.setState({ textWarning: invalid });
         } else {
-            let lists = this.props.lists;
+            let lists = this.props.lists,
 
-            let entry = this._newEntry(this.state.modalForm);
-            let items = [].concat(lists[this.state.modalForm.list].items, entry);
+                items, entry;
 
+            if (!this.props.item) {
+                entry = this._newEntry(this.state.modalForm);
+                items = [].concat(lists[this.state.modalForm.list].items, entry);
+            } else {
+                let item = this.props.item;
+
+                item.text = this.state.modalForm.text;
+                item.persist = this.state.modalForm.persist || false;
+                item.complete = this.state.modalForm.complete || false;
+
+                if (this._getItemListIndex(this.props.item, this.props.lists) !== this.state.modalForm.list) {
+                    // Splice out entry from orig list of items if list change
+                    // Enter spliced entry into new list of items
+                }
+            }
+            
             lists[this.state.modalForm.list].items = items;
 
             this.setState({
@@ -136,12 +163,14 @@ class NewItemModal extends Component {
 
             /* @Note 
                 this.boundPropMethod()() is a really annoying syntax.. whats up?? Bad binding pattern?
+
+                Yup, was following a bad example of binding it at the component property level.
+                Binding inside componentWillMount seems to be the proper pattern, or at least lets
+                me get rid of that disgusting ()() syntax.
             */
-            this.closeModal()();
+            this.closeModal();
 
             this.store.set(Constants.STORE_KEYS.LISTS, lists);
-
-            console.log(lists);
         }
     }
 
@@ -171,6 +200,20 @@ class NewItemModal extends Component {
         entry.persist = modalForm.persist || false;
 
         return entry;
+    }
+
+    _getItemListIndex(item, lists) {
+        let result;
+
+        for (let i in lists) {
+            for (let {id} of lists[i].items) {
+                if (id === item.id) {
+                    return i;
+                }
+            }
+        }
+
+        return result;
     }
 }
 
