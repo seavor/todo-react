@@ -10,7 +10,7 @@ import EditItemModal from '../../Modal/EditItemModal/EditItemModal';
 import './ListItem.css';
 
 class ListItem extends Component {
-	state = {
+    state = {
 		modalIsOpen: false
 	};
 
@@ -38,13 +38,22 @@ class ListItem extends Component {
 		            	{this.props.item.text}
 	            	</div>
 	            	<div className="ListItem-actions">
-	            		{/*
+	            		{/* @NOTE
+                         
 	            			React doesnt seem to like nested buttons
 	            			Per https://developer.mozilla.org, this seems like valid HTML5 syntax
 	            			https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button
 							https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories#Phrasing_content
 
-	            			Moving on..
+                            Moving on..
+
+                            Huh.. might have missed this line in the spec..
+                            Phrasing content, but there must be no interactive content descendant.
+
+                            Note: I wonder what the proper pattern is for descendant interactivity. Sometimes, you might have an element
+                            that has a top level click functionality, as well as inner functionality, as i have here. Do you play
+                            DOM games and absolute position elements over one another so they arent technically descendants? Is this just
+                            such bad UI/UX that its been built into the HTML spec? I will have to research this further
 	            		*/}
 	            		<button onClick={this.togglePersist} className={"button " + (this.props.item.persist ? 'selected' : '')}>
 	            			{Images.favoriteIcon()}

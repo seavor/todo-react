@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 // Component Service Dependencies
 import Store from '../../../services/Store/Store';
 import Constants from '../../../services/Constants/Constants';
+import Validation from '../../../services/Validation/Validation';
 import Images from '../../../services/Images/Images';
 
 // Component File Dependencies
@@ -17,13 +18,24 @@ class NewItemModal extends Component {
         MAX: 'Max Characters Reached'
     };
 
+    static DEFAULT_FORM_STATE = {
+        text: '',
+        list: Constants.LIST_KEYS.TODAY.INDEX
+    };
+
     state = {
         textWarning: '',
         isOpen: false,
 
-        modalForm: {
-            text: ''
-        }
+        /* @NOTE
+
+            I didnt expect to have to copy a static object reference
+            to avoid mutating the original static object properties
+            when working on the assignment variable.
+
+            Love this spread operator tho.
+        */
+        modalForm: {...NewItemModal.DEFAULT_FORM_STATE}
     };
 
     /* Prop Methods
@@ -38,7 +50,8 @@ class NewItemModal extends Component {
         this.store = new Store();
 
         this.handleNewListItem = this.handleNewListItem.bind(this);
-        this.onChange = this.onChange.bind(this);
+        this.onTextChange = this.onTextChange.bind(this);
+        this.onListChange = this.onListChange.bind(this);
     }
 
     render() {
@@ -48,7 +61,7 @@ class NewItemModal extends Component {
                     <h6>New Item</h6>
                     <form onSubmit={this.handleNewListItem}>
                         <div className="NewItemModal-text">
-                            <input type="text" placeholder="Watchya doing?" value={this.state.modalForm.text} ref="text" maxLength="100" onChange={this.onChange}></input>
+                            <input type="text" placeholder="Watchya doing?" value={this.state.modalForm.text} ref="text" maxLength="100" onChange={this.onTextChange}></input>
                             <p className="error">{this.state.textWarning}</p>
                         </div>
 
@@ -64,22 +77,28 @@ class NewItemModal extends Component {
                         </div>
 
                         <div className="NewItemModal-list">
-                            <div className="NewItemModal-list_item">
+                            <div className="NewItemModal-list_item radio">
                               <label>
-                                <input type="radio" value="{Constants.LIST_KEYS.TODAY.INDEX}" checked={false} />
-                                {Constants.LIST_KEYS.TODAY.INDEX}
+                                <input type="radio" onChange={this.onListChange} value={Constants.LIST_KEYS.TODAY.INDEX}
+                                    checked={this.state.modalForm.list === Constants.LIST_KEYS.TODAY.INDEX}
+                                />
+                                <span>{Constants.LIST_KEYS.TODAY.LABEL}</span>
                               </label>
                             </div>
-                            <div className="NewItemModal-list_item">
+                            <div className="NewItemModal-list_item radio">
                               <label>
-                                <input type="radio" value="{Constants.LIST_KEYS.TOMORROW.INDEX}" checked={false} />
-                                {Constants.LIST_KEYS.TOMORROW.INDEX}
+                                <input type="radio" onChange={this.onListChange} value={Constants.LIST_KEYS.TOMORROW.INDEX}
+                                    checked={this.state.modalForm.list === Constants.LIST_KEYS.TOMORROW.INDEX}
+                                />
+                                <span>{Constants.LIST_KEYS.TOMORROW.LABEL}</span>
                               </label>
                             </div>
-                            <div className="NewItemModal-list_item">
+                            <div className="NewItemModal-list_item radio">
                               <label>
-                                <input type="radio" value="{Constants.LIST_KEYS.WHENEVER.INDEX}" checked={false} />
-                                {Constants.LIST_KEYS.WHENEVER.INDEX}
+                                <input type="radio" onChange={this.onListChange} value={Constants.LIST_KEYS.WHENEVER.INDEX}
+                                    checked={this.state.modalForm.list === Constants.LIST_KEYS.WHENEVER.INDEX}
+                                />
+                                <span>{Constants.LIST_KEYS.WHENEVER.LABEL}</span>
                               </label>
                             </div>
                         </div>
@@ -98,51 +117,58 @@ class NewItemModal extends Component {
     handleNewListItem(e) {
         e.preventDefault();
 
-        if (!this.refs.text.value) {
-            this.setState({
-                textWarning: NewItemModal.TEXT_WARNINGS.EMPTY,
-            });
+        let invalid = Validation.minLength(this.state.modalForm.text);
+
+        if (invalid) {
+            this.setState({ textWarning: invalid });
         } else {
             let lists = this.props.lists;
 
-            let entry = this._newEntry(this.refs);
-            let items = [].concat(lists[Constants.LIST_KEYS.TODAY.INDEX].items, entry);
+            let entry = this._newEntry(this.state.modalForm);
+            let items = [].concat(lists[this.state.modalForm.list].items, entry);
 
-            lists[Constants.LIST_KEYS.TODAY.INDEX].items = items;
+            lists[this.state.modalForm.list].items = items;
 
             this.setState({
-                modalForm: {
-                    text: ''
-                },
-
+                modalForm: {...NewItemModal.DEFAULT_FORM_STATE},
                 lists: lists
             });
 
-            // @TODO this is a really annoying syntax.. whats up?? Bad prop method binding pattern?
+            /* @Note 
+                this.boundPropMethod()() is a really annoying syntax.. whats up?? Bad binding pattern?
+            */
             this.closeModal()();
 
             this.store.set(Constants.STORE_KEYS.LISTS, lists);
+
+            console.log(lists);
         }
     }
 
-    onChange(e) {
+    onTextChange(e) {
         let form = this.state.modalForm;
         form.text = e.target.value;
 
-        this.setState({
-            modalForm: form,
-            textWarning: form.text.length === Constants.TEXT_LIMIT ? NewItemModal.TEXT_WARNINGS.MAX : null,
-        });
+        let invalid = Validation.maxLength(form.text.length);
+
+        this.setState({ modalForm: form, textWarning: invalid });
+    }
+
+    onListChange(e) {
+        let form = this.state.modalForm;
+        form.list = parseInt(e.target.value, 10);
+
+        this.setState({ modalForm: form });
     }
 
     /* Private Methods
     *********************************************************************/
-    _newEntry(refs) {
+    _newEntry(modalForm) {
         let entry = this.store.newDataEntry();
 
-        entry.text = refs.text.value;
-        entry.complete = refs.complete || false;
-        entry.persist = refs.persist || false;
+        entry.text = modalForm.text;
+        entry.complete = modalForm.complete || false;
+        entry.persist = modalForm.persist || false;
 
         return entry;
     }

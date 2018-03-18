@@ -15,7 +15,6 @@ class Validation {
     }
 
     static maxLength(length) {
-    	console.log('Validation', length);
     	if (length === Validation.TEXT_LIMIT) {
     		return Validation.TEXT_WARNINGS.MAX;
     	}

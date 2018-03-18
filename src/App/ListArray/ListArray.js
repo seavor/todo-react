@@ -61,6 +61,9 @@ class ListArray extends Component {
     if (!lists.length) {
       lists.push(this._newList(1));
       lists.push(this._newList());
+
+      // Create special Whenever list container
+      lists[Constants.LIST_KEYS.WHENEVER.INDEX] = this._newList();
     } else {
       this._initializeTodaysLists(lists);
     }
@@ -71,25 +74,23 @@ class ListArray extends Component {
   }
 
   _initializeTodaysLists(lists) {
-    let todayListExists = this._isToday(lists[Constants.LIST_KEYS.TODAY.INDEX].date),
-      tomorrowIsToday = this._isToday(lists[Constants.LIST_KEYS.TOMORROW.INDEX].date),
-      
-      originalYesterdayList = lists[Constants.LIST_KEYS.YESTERDAY.INDEX];
+    let originalYesterdayList = lists[Constants.LIST_KEYS.YESTERDAY.INDEX],
+      originalTodayList = lists[Constants.LIST_KEYS.TODAY.INDEX],
+      originalTomorrowList = lists[Constants.LIST_KEYS.TOMORROW.INDEX],
 
+      todayListExists = this._isToday(originalTodayList.date),
+      tomorrowIsToday = this._isToday(originalTomorrowList.date);
+    
     if (!todayListExists) {
-      let newYesterdayList;
+      let newTomorrowList = this._newList(1),
+        newTodayList = tomorrowIsToday ? originalTomorrowList : this._newList(),
+        secondPersistLayer = tomorrowIsToday ? originalYesterdayList : originalTomorrowList;
 
-      if (!tomorrowIsToday) {
-        newYesterdayList = lists[Constants.LIST_KEYS.TODAY.INDEX];
-        lists.unshift(this._newList());
-      }
+      this._persistItems(originalTodayList.items, newTodayList.items);
+      this._persistItems(secondPersistLayer.items, newTodayList.items);
 
-      lists.unshift(this._newList(1));
-      
-      originalYesterdayList && this._persistItems(lists[Constants.LIST_KEYS.TODAY.INDEX].items, originalYesterdayList.items);
-      newYesterdayList && this._persistItems(lists[Constants.LIST_KEYS.TODAY.INDEX].items, newYesterdayList.items);
+      lists.unshift(newTomorrowList, newTodayList);
     }
-
   }
 
   _newList(tomorrow) {
@@ -105,7 +106,7 @@ class ListArray extends Component {
     return Moment.tz(Moment(date), Moment.tz.guess()).isSame(today, 'd');
   }
 
-  _persistItems(list, items) {
+  _persistItems(items, list) {
     items.map(function(item, i) {
       if (item.persist) {
         list.push(item);

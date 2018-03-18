@@ -21,13 +21,6 @@ class Constants {
 	static STORE_KEYS = {
 		LISTS: 'lists'
 	}
-	
-	static TEXT_LIMIT = 100;
-
-	static TEXT_WARNINGS = {
-        EMPTY: 'An empty task isn\'t very useful',
-        MAX: 'Max Characters Reached'
-    };
 }
 
 

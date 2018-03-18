@@ -18,10 +18,13 @@
     			display: inline-block;
 			}
 
+			.NewItemModal-status_persist{
+				margin-bottom: .5em;
+			}
+
 			.NewItemModal-status_wrapper span {
 				vertical-align: top;
 				margin-right: .5em;
-				margin-bottom: .5em;
 			}
 
 				.NewItemModal-status_wrapper i.adjust {
@@ -31,4 +34,15 @@
 		.NewItemModal-status svg {
 			height: 1em;
 			width: 1em;
+		}
+
+	.NewItemModal-list {
+		display: flex;
+    	justify-content: space-around;
+	}
+
+		.NewItemModal-list_item {
+			width: 33%;
+			flex-grow: 1;
+		    margin: 0 .5em;
 		}

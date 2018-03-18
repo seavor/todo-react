@@ -185,3 +185,34 @@ input {
 	width: 100%;
 	color: inherit;
 }
+
+.radio {
+	display: inline-block;
+}
+
+	.radio label {
+		display: block;
+		cursor: pointer;
+	    text-align: center;
+	}
+
+	.radio input {
+		display: none;
+	}
+
+		.radio input ~ span {
+			display: block;
+	    	padding: .5em 1em;
+	    	border: 1px solid;
+		}
+
+			.radio label:hover span,
+			.radio label:focus span,
+			.radio input:checked ~ span {
+				border-color: transparent;
+				background:  rgba(0, 255, 0, .75);
+			}
+
+			.radio label:active span {
+				background:  rgb(0, 255, 0);
+			}
