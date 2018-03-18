@@ -39,15 +39,15 @@ class ListArray extends Component {
     return (
       <div className="ListArray">
         <div className="ListArray-item">
-          <h2 className="ListArray-item_title">Yesterday</h2>
-          <List updateList={this.updateLists()} list={this.state.lists[this.state.listIndex+Constants.LIST_KEYS.YESTERDAY]} />
+          <h2 className="ListArray-item_title">{Constants.LIST_KEYS.YESTERDAY.LABEL}</h2>
+          <List updateList={this.updateLists()} list={this.state.lists[this.state.listIndex+Constants.LIST_KEYS.YESTERDAY.INDEX]} />
         </div>
         <div className="ListArray-item">
-          <h2 className="ListArray-item_title">Today</h2>
-          <List updateList={this.updateLists()} list={this.state.lists[this.state.listIndex+Constants.LIST_KEYS.TODAY]} />
+          <h2 className="ListArray-item_title">{Constants.LIST_KEYS.TODAY.LABEL}</h2>
+          <List updateList={this.updateLists()} list={this.state.lists[this.state.listIndex+Constants.LIST_KEYS.TODAY.INDEX]} />
         </div>
         <div className="ListArray-item">
-          <h2 className="ListArray-item_title">Tomorrow</h2>
+          <h2 className="ListArray-item_title">{Constants.LIST_KEYS.TOMORROW.LABEL}</h2>
           <List updateList={this.updateLists()} list={this.state.lists[this.state.listIndex]} />
         </div>
       </div>
@@ -71,23 +71,23 @@ class ListArray extends Component {
   }
 
   _initializeTodaysLists(lists) {
-    let todayListExists = this._isToday(lists[Constants.LIST_KEYS.TODAY].date),
-      tomorrowIsToday = this._isToday(lists[Constants.LIST_KEYS.TOMORROW].date),
+    let todayListExists = this._isToday(lists[Constants.LIST_KEYS.TODAY.INDEX].date),
+      tomorrowIsToday = this._isToday(lists[Constants.LIST_KEYS.TOMORROW.INDEX].date),
       
-      originalYesterdayList = lists[Constants.LIST_KEYS.YESTERDAY];
+      originalYesterdayList = lists[Constants.LIST_KEYS.YESTERDAY.INDEX];
 
     if (!todayListExists) {
       let newYesterdayList;
 
       if (!tomorrowIsToday) {
-        newYesterdayList = lists[Constants.LIST_KEYS.TODAY];
+        newYesterdayList = lists[Constants.LIST_KEYS.TODAY.INDEX];
         lists.unshift(this._newList());
       }
 
       lists.unshift(this._newList(1));
       
-      originalYesterdayList && this._persistItems(lists[Constants.LIST_KEYS.TODAY].items, originalYesterdayList.items);
-      newYesterdayList && this._persistItems(lists[Constants.LIST_KEYS.TODAY].items, newYesterdayList.items);
+      originalYesterdayList && this._persistItems(lists[Constants.LIST_KEYS.TODAY.INDEX].items, originalYesterdayList.items);
+      newYesterdayList && this._persistItems(lists[Constants.LIST_KEYS.TODAY.INDEX].items, newYesterdayList.items);
     }
 
   }

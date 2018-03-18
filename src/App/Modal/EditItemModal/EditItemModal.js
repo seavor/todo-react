@@ -5,17 +5,13 @@ import PropTypes from 'prop-types';
 // Component Service Dependencies
 import Store from '../../../services/Store/Store';
 import Constants from '../../../services/Constants/Constants';
+import Validation from '../../../services/Validation/Validation';
 
 // Component File Dependencies
 import './EditItemModal.css';
 import Modal from '../../Modal/Modal';
 
 class EditItemModal extends Component {
-    static TEXT_WARNINGS = {
-        EMPTY: 'An empty task isn\'t very useful',
-        MAX: 'Max Characters Reached'
-    };
-
     state = {
         textWarning: '',
         isOpen: false,
@@ -48,8 +44,8 @@ class EditItemModal extends Component {
                     <h6>Edit List Item</h6>
                     <form onSubmit={this.handleEditListItem}>
                       <input type="text" placeholder="Watchya doing?" value={this.state.modalForm.text()} ref="text" maxLength="100" onChange={this.onChange}></input>
-                      <p>{this.state.textWarning}</p>
-                      <button type="submit">Submit</button>
+                      <p className="error">{this.state.textWarning}</p>
+                      <button>Submit</button>
                     </form>
                 </div>
             </Modal>
@@ -62,9 +58,11 @@ class EditItemModal extends Component {
         e.preventDefault();
         this.onChange(e);
 
-        if (!this.state.modalForm.text()) {
+        let invalid = Validation.minLength(this.state.modalForm.text());
+
+        if (invalid) {
             this.setState({
-                textWarning: EditItemModal.TEXT_WARNINGS.EMPTY,
+                textWarning: invalid,
             });
         } else {
             let item = this.props.item;
@@ -83,7 +81,7 @@ class EditItemModal extends Component {
 
         this.setState({
             modalForm: form,
-            textWarning: form.text.length === Constants.TEXT_LIMIT ? EditItemModal.TEXT_WARNINGS.MAX : null,
+            textWarning: Validation.maxLength(form.text().length),
         });
     }
 }

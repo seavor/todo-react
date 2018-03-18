@@ -1,0 +1,34 @@
+.NewItemModal {
+
+}
+
+	.NewItemModal-status {
+	    margin: 50px 0;
+	    text-align: center;
+        font-size: 2em;
+	}
+
+		.NewItemModal-status_wrapper {
+		    display: inline-block;
+		    text-align: right;
+		}
+
+			.NewItemModal-status_wrapper i,
+			.NewItemModal-status_wrapper span {
+    			display: inline-block;
+			}
+
+			.NewItemModal-status_wrapper span {
+				vertical-align: top;
+				margin-right: .5em;
+				margin-bottom: .5em;
+			}
+
+				.NewItemModal-status_wrapper i.adjust {
+				    transform: translate(.075em);
+				}
+
+		.NewItemModal-status svg {
+			height: 1em;
+			width: 1em;
+		}
