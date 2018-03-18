@@ -36,6 +36,8 @@ class NewItemModal extends Component {
             by reference.
 
             Love this spread operator tho.
+
+            ES6 in general has been really nice to work with.
         */
         modalForm: {...NewItemModal.DEFAULT_FORM_STATE}
     };
