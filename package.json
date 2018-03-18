@@ -2,6 +2,7 @@
   "name": "todolist",
   "version": "0.1.0",
   "private": true,
+  "homepage" : "http://72hrs.jletto.com",
   "dependencies": {
     "moment": "^2.21.0",
     "moment-timezone": "^0.5.14",
