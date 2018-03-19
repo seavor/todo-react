@@ -34,6 +34,7 @@ This project was started with the intention of being designed and built over the
 - `@NOTE`: There are notes sprinkled throughout the codebase, where I ran into some kind of issue or quirk that I had to work out. I've left these in as further insights into my learning and thought process while using React & ES6.
 	- `/src/App/List/ListItem/ListItem.js`
 	- `/src/App/Modal/NewItemModal/NewItemModal.js`
+	- `/src/App/Modal/EditItemModal/EditItemModal.js`
 
 ## Summary
 - This was my first time working with React beyond Hello World. And I can say, without a doubt, that I LOVE it. Coming from an AngularJS background, it felt like such a breeze wiring up components and interactive child components. I can't wait to use it in a proper project.\

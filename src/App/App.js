@@ -13,20 +13,6 @@ import ListArray from './ListArray/ListArray';
 import NewItemModal from './Modal/NewItemModal/NewItemModal';
 
 class App extends Component {
-  static TEXT_WARNINGS = {
-    EMPTY: 'An empty task isn\'t very useful',
-    MAX: 'Max Characters Reached'
-  };
-
-  state = {
-    lists: [],
-
-    modalIsOpen: false,
-    modalForm: {
-      text: ''
-    }
-  }
-
   /* Lifecycle Methods
   *********************************************************************/
   constructor(props) {
@@ -36,6 +22,15 @@ class App extends Component {
 
     this.toggleModal = this.toggleModal.bind(this);
     this.updateLists = this.updateLists.bind(this);
+
+    this.state = {
+      lists: [],
+
+      modalIsOpen: false,
+      modalForm: {
+        text: ''
+      }
+    };
   }
 
   componentWillMount() {
@@ -80,10 +75,6 @@ class App extends Component {
   }
 
   updateLists() {
-    let item = this.state.lists[1].items[0];
-
-    console.log(item.text);
-
     this.setState({
       lists: this.state.lists
     });

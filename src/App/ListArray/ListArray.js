@@ -12,24 +12,22 @@ import './ListArray.css';
 import List from '../List/List';
 
 class ListArray extends Component {
-  state = {
-    listIndex: 0,
-    lists: []
-  };
-
-  /* Prop Methods
-  *********************************************************************/
-  updateLists = () => this.props.updateLists.bind(this);
-
   /* Lifecycle Methods
   *********************************************************************/
   constructor(props) {
     super(props);
 
     this.store = new Store();
+
+    this.state = {
+      listIndex: 0,
+      lists: []
+    };
   }
 
   componentWillMount() {
+    this.updateLists = this.props.updateLists.bind(this);
+
     this.setState({
       lists: this._initializeLists(this.props.lists)
     });
@@ -40,15 +38,15 @@ class ListArray extends Component {
       <div className="ListArray">
         <div className="ListArray-item">
           <h2 className="ListArray-item_title">{Constants.LIST_KEYS.YESTERDAY.LABEL}</h2>
-          <List updateList={this.updateLists()} list={this.state.lists[this.state.listIndex+Constants.LIST_KEYS.YESTERDAY.INDEX]} />
+          <List updateList={this.updateLists} list={this.state.lists[this.state.listIndex+Constants.LIST_KEYS.YESTERDAY.INDEX]} />
         </div>
         <div className="ListArray-item">
           <h2 className="ListArray-item_title">{Constants.LIST_KEYS.TODAY.LABEL}</h2>
-          <List updateList={this.updateLists()} list={this.state.lists[this.state.listIndex+Constants.LIST_KEYS.TODAY.INDEX]} />
+          <List updateList={this.updateLists} list={this.state.lists[this.state.listIndex+Constants.LIST_KEYS.TODAY.INDEX]} />
         </div>
         <div className="ListArray-item">
           <h2 className="ListArray-item_title">{Constants.LIST_KEYS.TOMORROW.LABEL}</h2>
-          <List updateList={this.updateLists()} list={this.state.lists[this.state.listIndex]} />
+          <List updateList={this.updateLists} list={this.state.lists[this.state.listIndex]} />
         </div>
       </div>
       );

@@ -13,33 +13,9 @@ import './NewItemModal.css';
 import Modal from '../../Modal/Modal';
 
 class NewItemModal extends Component {
-    static TEXT_WARNINGS = {
-        EMPTY: 'An empty task isn\'t very useful',
-        MAX: 'Max Characters Reached'
-    };
-
     static DEFAULT_FORM_STATE = {
         text: '',
         list: Constants.LIST_KEYS.TODAY.INDEX
-    };
-
-    state = {
-        textWarning: '',
-        isOpen: false,
-
-        /* @NOTE
-
-            I didnt expect to have to copy a static object reference
-            to avoid mutating the original static object properties
-            when working on the assignment variable. I expected assigning
-            static properties to a variable would be done by copy, and not
-            by reference.
-
-            Love this spread operator tho.
-
-            ES6 in general has been really nice to work with.
-        */
-        modalForm: {...NewItemModal.DEFAULT_FORM_STATE}
     };
 
     /* Lifecycle Methods
@@ -52,6 +28,26 @@ class NewItemModal extends Component {
         this.handleNewListItem = this.handleNewListItem.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onListChange = this.onListChange.bind(this);
+
+        this.state = {
+            textWarning: '',
+            isOpen: false,
+
+            /* @NOTE
+
+                I didnt expect to have to copy a static object reference
+                to avoid mutating the original static object properties
+                when working on the assignment variable. I expected assigning
+                static properties to a variable would be done by copy, and not
+                by reference.
+
+                Love this spread operator tho.
+
+                ES6 in general has been really nice to work with.
+                
+            */
+            modalForm: {...NewItemModal.DEFAULT_FORM_STATE}
+        };
     }
 
     componentWillMount() {

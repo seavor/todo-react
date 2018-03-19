@@ -7,16 +7,17 @@ import './List.css';
 import ListItem from './ListItem/ListItem';
 
 class List extends Component {
-    /* Prop Methods
-    *********************************************************************/
-    updateList = () => this.props.updateList.bind(this);
-
     /* Lifecycle Methods
     *********************************************************************/
     constructor() {
         super();
 
         this.mapItems = this.mapItems.bind(this);
+        this.noListDisplay = this.noListDisplay.bind(this);
+    }
+
+    componentWillMount() {
+        this.updateList = this.props.updateList.bind(this);
     }
 
     render() {
@@ -34,7 +35,7 @@ class List extends Component {
     /* Component Methods
     *********************************************************************/
     mapItems(item, i) {
-        return <ListItem item={item} key={i} updateItem={this.updateList()}></ListItem>;
+        return <ListItem item={item} key={i} updateItem={this.updateList}></ListItem>;
     }
 
     noListDisplay() {

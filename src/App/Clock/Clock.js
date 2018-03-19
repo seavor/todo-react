@@ -6,25 +6,25 @@ import Moment from 'moment-timezone';
 import './Clock.css';
 
 class Clock extends Component {
-	state = {
-		date: this._newDate(),
-		time: this._newTime()
-	}
-
+	/* Lifecycle Methods
+	*********************************************************************/
 	constructor(props) {
 		super(props);
 
 		this.tick = this.tick.bind(this);
-	}
 
-	/* Lifecycle Methods
-	*********************************************************************/
-	componentDidMount() {
-		this.ticker = setInterval(this.tick, 1000);
+		this.state = {
+			date: this._newDate(),
+			time: this._newTime()
+		};
 	}
 
 	componentWillMount() {
 		clearInterval(this.ticker);
+	}
+
+	componentDidMount() {
+		this.ticker = setInterval(this.tick, 1000);
 	}
 
 	render() {

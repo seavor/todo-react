@@ -10,14 +10,6 @@ import EditItemModal from '../../Modal/EditItemModal/EditItemModal';
 import './ListItem.css';
 
 class ListItem extends Component {
-    state = {
-		modalIsOpen: false
-	};
-
-    /* Prop Methods
-    *********************************************************************/
-    updateItem = () => this.props.updateItem.bind(this);
-
     /* Lifecycle Methods
     *********************************************************************/
     constructor() {
@@ -27,7 +19,13 @@ class ListItem extends Component {
     	this.togglePersist = this.togglePersist.bind(this);
     	this.toggleComplete = this.toggleComplete.bind(this);
 
-    	this.updateSelf = this.updateSelf.bind(this);
+        this.state = {
+            modalIsOpen: false
+        };
+    }
+
+    componentWillMount() {
+        this.updateItem = this.props.updateItem.bind(this);
     }
 
     render() {
@@ -64,7 +62,7 @@ class ListItem extends Component {
 	            	</div>
 	            </button>
 
-	           <EditItemModal isOpen={this.state.modalIsOpen} closeModal={this.toggleModal} item={this.props.item} save={this.updateSelf}></EditItemModal>
+	           <EditItemModal isOpen={this.state.modalIsOpen} closeModal={this.toggleModal} item={this.props.item} save={this.updateItem}></EditItemModal>
             </li>
         );
     }
@@ -99,7 +97,7 @@ class ListItem extends Component {
 	    	item.complete = false;
     	}
 
-    	this.updateSelf();
+    	this.updateItem();
     }
 
     toggleComplete(e) {
@@ -112,11 +110,7 @@ class ListItem extends Component {
 	    	item.persist = false;
     	}
 
-    	this.updateSelf();
-    }
-
-    updateSelf() {
-    	this.updateItem()();
+    	this.updateItem();
     }
 }
 
