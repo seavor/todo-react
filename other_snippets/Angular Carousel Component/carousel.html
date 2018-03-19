@@ -1,0 +1,78 @@
+<div class="lit-teacher-carousel flex items-stretch">
+  <div class="lit-teacher-carousel-slider">
+    <div class="lit-teacher-carousel-slider-title">
+      New Picks for {{vm.user.title}} {{vm.user.firstName.substr(0, 1)}}. {{vm.user.lastName}}
+    </div>
+    <div uib-carousel class="lit-teacher-carousel-slider-wrapper self-stretch self-grow items-stretch"
+      active="true"
+      interval="false"
+      no-wrap="false">
+      <div uib-slide class="lit-teacher-carousel-slider-item self-stretch self-grow relative"
+        ng-repeat="slide in vm.slides track by slide.id" index="slide.id">
+        <a class="lit-teacher-carousel-slider-item-contents" ng-repeat="book in slide.books" ui-sref="^.search({term: book.id, type: 'book'})">
+          <lit-book-cover book="book" height="500"></lit-book-cover>
+          <div class="book-title">{{book.title}}</div>
+          <div class="book-author">
+              <lit-book-contributor-by-role contributor-role="primary" book="book"></lit-book-contributor-by-role>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="lit-teacher-carousel-data">
+    <div class="lit-teacher-carousel-data-wrapper">
+      <div class="lit-teacher-carousel-data-header">
+        <span class="lit-teacher-carousel-data-header-label">Viewing</span>
+        <div class="lit-dropdown" uib-dropdown>
+          <button id="viewing-dropdown-button" type="button" class="dropdown-button" ng-disabled="vm.classes.length < 2" uib-dropdown-toggle>
+            <span>{{vm.selectedClass.className}}</span>
+            <span class="fa fa-chevron-down dropdown-carrot"><span class="sr-only">Select</span></span>
+          </button>
+          <ul class="dropdown-menu dropdown-list" role="menu" aria-labelledby="viewing-dropdown-button" uib-dropdown-menu>
+            <li role="menuitem dropdown-listitem" ng-repeat="class in vm.classes.results">
+              <button ng-click="vm.selectClassDash(class)">{{class.className}}</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="lit-teacher-carousel-data-content">
+        <div class="lit-teacher-carousel-data-content-item">
+          <span class="lit-teacher-carousel-data-content-item-data"
+            data-fittext
+            data-fittext-max="inherit"
+            >{{vm.reports.totalMinutesRead ? (vm.reports.totalMinutesRead | number : fractionSize) : '-' }}
+          </span>
+          <h6 class="lit-teacher-carousel-data-content-item-label">Total Student Minutes</h6>
+        </div>
+        <div class="lit-teacher-carousel-data-content-item">
+          <span class="lit-teacher-carousel-data-content-item-data"
+            data-fittext
+            data-fittext-max="inherit"
+            >{{vm.reports.averageThinkMoreScore ? vm.reports.averageThinkMoreScore + '%' : '-'}}
+          </span>
+          <h6 class="lit-teacher-carousel-data-content-item-label">Average Think More Score</h6>
+        </div>
+        <div class="lit-teacher-carousel-data-content-item">
+          <span class="lit-teacher-carousel-data-content-item-data"
+            data-fittext
+            data-fittext-max="inherit"
+            >{{vm.reports.totalBooksReading ? (vm.reports.totalBooksReading | number : fractionSize) : '-'}}
+          </span>
+          <h6 class="lit-teacher-carousel-data-content-item-label">Total Books Reading</h6>
+        </div>
+        <div class="lit-teacher-carousel-data-content-item">
+          <span class="lit-teacher-carousel-data-content-item-data"
+            data-fittext
+            data-fittext-max="inherit"
+            >{{vm.reports.totalPoints ? (vm.reports.totalPoints | number : fractionSize) : '-'}}
+          </span>
+          <h6 class="lit-teacher-carousel-data-content-item-label">Total Points Earned</h6>
+        </div>
+      </div>
+      <div class="lit-teacher-carousel-data-cta">
+        <a ui-sref="init.teacher.reports.classes.overview({itemId: vm.selectedClass.classId === -1 ? 'all' : vm.selectedClass.classId})">See All Reports</a>
+      </div>
+    </div>
+  </div>
+</div>

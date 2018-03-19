@@ -1,0 +1,4 @@
+# Simulator Service
+
+## Service Description
+- This service was built to fulfill API requests that might fail for a number of reasons while developing the application. Example, if I was developing the view to show a list of teachers, the API to get that list of teachers might be in a state of development, or might be currently broken by a bug. In this case, the simulator intercepts the failed request, looks into its static data for a defined object for the given request URL, and transforms the response back into SUCCESS along with the static data if it finds a matching entry. This tool was incredibly helpful in the development of our last project, as our timeline was very tight and put FE and BE development quite close together, often working on FE components and cooresponding BE APIs in the same sprint.
